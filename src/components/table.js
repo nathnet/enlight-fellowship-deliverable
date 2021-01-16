@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import {
   Paper,
   Table,
@@ -13,45 +14,13 @@ import {
 import Row from "./row";
 import TablePaginationActions from "./tableActions";
 
-function UserDataTable() {
-  const [completionData, setCompletionData] = useState([]);
+function UserDataTable(props) {
+  const { data } = props;
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const emptyRows =
-    rowsPerPage -
-    Math.min(rowsPerPage, completionData.length - page * rowsPerPage);
-
-  useEffect(() => {
-    getCompletionData();
-  }, []);
-
-  const getCompletionData = () => {
-    fetch("data/completions.json", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "GET",
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        response.completions.map((user) => {
-          user.milestones = user.milestones.sort(
-            (projectOne, projectTwo) =>
-              parseInt(projectTwo.datetime) - parseInt(projectOne.datetime)
-          );
-        });
-        return response.completions;
-      })
-      .then((data) => {
-        setCompletionData(data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+    rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -63,7 +32,7 @@ function UserDataTable() {
   };
 
   return (
-    <section className="my-4">
+    <section className="my-8 py-4">
       <h2 className="p-4 text-3xl text-green-600">Table</h2>
       <TableContainer component={Paper}>
         <Table
@@ -84,16 +53,13 @@ function UserDataTable() {
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0
-              ? completionData.slice(
-                  page * rowsPerPage,
-                  page * rowsPerPage + rowsPerPage
-                )
-              : completionData
+              ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : data
             ).map((user) => (
               <Row key={user.username} user={user} />
             ))}
 
-            {emptyRows > 0 && (
+            {emptyRows > 0 && data.length > rowsPerPage && (
               <TableRow style={{ height: 53 * emptyRows }}>
                 <TableCell colSpan={5} />
               </TableRow>
@@ -102,12 +68,13 @@ function UserDataTable() {
           <TableFooter>
             <TableRow>
               <TablePagination
-                count={completionData.length}
+                count={data.length}
                 rowsPerPageOptions={[
+                  5,
                   10,
                   20,
                   50,
-                  { label: "All", value: completionData.length },
+                  { label: "All", value: data.length },
                 ]}
                 rowsPerPage={rowsPerPage}
                 page={page}
@@ -126,5 +93,24 @@ function UserDataTable() {
     </section>
   );
 }
+
+UserDataTable.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      username: PropTypes.string.isRequired,
+      milestones: PropTypes.arrayOf(
+        PropTypes.shape({
+          milestone: PropTypes.string.isRequired,
+          datetime: PropTypes.string.isRequired,
+          id: PropTypes.string.isRequired,
+          demo: PropTypes.string.isRequired,
+          image: PropTypes.string,
+          description: PropTypes.string,
+        })
+      ),
+    })
+  ).isRequired,
+};
 
 export default UserDataTable;
