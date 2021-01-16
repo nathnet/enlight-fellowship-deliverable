@@ -7,8 +7,7 @@ import {
   TableContainer,
   TableFooter,
   TableHead,
-  TablePagination,
-  TableRow,
+  TablePag  TableRow,
 } from "@material-ui/core";
 import Row from "./row";
 import TablePaginationActions from "./tableActions";
@@ -27,12 +26,11 @@ function UserDataTable() {
   }, []);
 
   const getCompletionData = () => {
-    fetch("https://enlight.nyc/completions.json", {
+    fetch("data/completions.json", {
       headers: {
         "Content-Type": "application/json",
       },
       method: "GET",
-      mode: "no-cors"
     })
       .then((response) => {
         return response.json();
@@ -114,6 +112,11 @@ function UserDataTable() {
                 page={page}
                 SelectProps={{
                   inputProps: { "aria-label": "rows per page" },
+}
+                SelectProps={{
+                  inputProps: { 'aria-label': 'rows per page' },
+          SelectProps={{
+                  inputProps: { 'aria-label': 'rows per page' },
                   native: true,
                 }}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
