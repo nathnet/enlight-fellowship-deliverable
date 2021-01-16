@@ -7,7 +7,8 @@ import {
   TableContainer,
   TableFooter,
   TableHead,
-  TablePag  TableRow,
+  TablePagination,
+  TableRow,
 } from "@material-ui/core";
 import Row from "./row";
 import TablePaginationActions from "./tableActions";
@@ -112,11 +113,6 @@ function UserDataTable() {
                 page={page}
                 SelectProps={{
                   inputProps: { "aria-label": "rows per page" },
-}
-                SelectProps={{
-                  inputProps: { 'aria-label': 'rows per page' },
-          SelectProps={{
-                  inputProps: { 'aria-label': 'rows per page' },
                   native: true,
                 }}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
