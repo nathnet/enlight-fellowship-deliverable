@@ -27,7 +27,7 @@ function UserDataTable() {
   }, []);
 
   const getCompletionData = () => {
-    fetch("data/completions.json", {
+    fetch("https://enlight.nyc/completions.json", {
       headers: {
         "Content-Type": "application/json",
       },
