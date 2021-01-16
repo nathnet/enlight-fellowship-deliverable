@@ -32,6 +32,7 @@ function UserDataTable() {
         "Content-Type": "application/json",
       },
       method: "GET",
+      mode: "no-cors"
     })
       .then((response) => {
         return response.json();
