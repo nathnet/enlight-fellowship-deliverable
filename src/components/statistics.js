@@ -7,12 +7,20 @@ function OverallStatistics(props) {
   const [completedStudents, setCompletedStudents] = useState(0);
   const [totalProjectsCompleted, setTotalProjectsCompleted] = useState(0);
 
+  /**
+   * Could be made better by inserting the project count into
+   * findCompletedStudents, however, I chose to do it this way
+   * for readability
+   */
   useEffect(() => {
-    countCompletedStudents();
-    countAverageCompletions();
+    findCompletedStudents();
+    countTotalCompletions();
   }, [data]);
 
-  const countCompletedStudents = () => {
+  /**
+   * Find students who completed project 3 (cohort)
+   */
+  const findCompletedStudents = () => {
     const completedUsers = data.filter((user) => {
       const qualified = user.milestones.filter((milestone) => {
         return milestone.id === "project-3";
@@ -23,7 +31,10 @@ function OverallStatistics(props) {
     setCompletedStudents(completedUsers);
   };
 
-  const countAverageCompletions = () => {
+  /**
+   * Count the number of submissions from all students
+   */
+  const countTotalCompletions = () => {
     let numProjectsCompleted = 0;
     data.forEach((user) => {
       numProjectsCompleted += user.milestones.length;
@@ -37,7 +48,7 @@ function OverallStatistics(props) {
       <h2 className="p-4 text-3xl text-green-600">Statistics</h2>
       <p className="text-xl">
         Overall Completion Rate:{" "}
-        {((completedStudents.length / data.length) * 100).toFixed(2) + "%"}
+        {((completedStudents.length / data.length) * 100).toFixed(1) + "%"}
       </p>
       <p className="text-xl">
         Average Number of Milestones Completed per Cohort Member:{" "}

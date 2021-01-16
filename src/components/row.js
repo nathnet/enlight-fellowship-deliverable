@@ -14,8 +14,14 @@ import {
 } from "@material-ui/core";
 import { KeyboardArrowUp, KeyboardArrowDown } from "@material-ui/icons";
 
+/**
+ * The total amount of milestones
+ */
 const TOTAL_MILESTONES = 9;
 
+/**
+ * Creation of styles for table
+ */
 const tableStyles = makeStyles({
   p0: {
     padding: 0,
@@ -28,10 +34,16 @@ function Row(props) {
 
   const mainStyles = tableStyles();
 
+  /**
+   * Convert the date from milestone
+   */
   const mostRecentMilestoneDate = new Date(
     parseInt(user.milestones[0].datetime)
   );
 
+  /**
+   * Render the collapsed row for each user
+   */
   const renderCollapsed = user.milestones.map((milestone) => {
     const date = new Date(parseInt(milestone.datetime));
 
@@ -62,7 +74,7 @@ function Row(props) {
         <TableCell>{user.name}</TableCell>
         <TableCell>enlight.nyc/user/{user.username}</TableCell>
         <TableCell>
-          {((user.milestones.length / TOTAL_MILESTONES) * 100).toFixed(2) + "%"}
+          {((user.milestones.length / TOTAL_MILESTONES) * 100).toFixed(1) + "%"}
         </TableCell>
         <TableCell>{user.milestones[0].milestone}</TableCell>
         <TableCell>

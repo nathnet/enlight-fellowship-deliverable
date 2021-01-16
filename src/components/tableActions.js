@@ -11,18 +11,34 @@ import {
 function TablePaginationActions(props) {
   const { count, page, rowsPerPage, onChangePage } = props;
 
+  /**
+   * Set the page to the first page
+   * @param {event} event Event handler
+   */
   const handleFirstPageButtonClick = (event) => {
     onChangePage(event, 0);
   };
 
+  /**
+   * Set the page to the one before the current one
+   * @param {event} event Event handler
+   */
   const handleBackButtonClick = (event) => {
     onChangePage(event, page - 1);
   };
 
+  /**
+   * Set the page to the one after the current one
+   * @param {event} event Event handler
+   */
   const handleNextButtonClick = (event) => {
     onChangePage(event, page + 1);
   };
 
+  /**
+   * Set the page to the last page
+   * @param {event} event Event handler
+   */
   const handleLastPageButtonClick = (event) => {
     onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };

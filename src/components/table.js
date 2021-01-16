@@ -19,14 +19,27 @@ function UserDataTable(props) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
+  /**
+   * Get the number of empty rows on the page
+   */
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
+  /**
+   * Set rows per page to the number given
+   * and set the page to the first page
+   * @param {event} event Event handler
+   */
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
+  /**
+   * Set the page to the number given
+   * @param {event} event Event handler
+   * @param {number} newPage The number of page to set to
+   */
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
