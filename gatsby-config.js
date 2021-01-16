@@ -1,12 +1,12 @@
-const resolveConfig = require("tailwindcss/resolveConfig");
+/* const resolveConfig = require("tailwindcss/resolveConfig"); */
 const tailwindConfig = require("./tailwind.config.js");
 
-const fullConfig = resolveConfig(tailwindConfig);
+/* const fullConfig = resolveConfig(tailwindConfig); */
 
 module.exports = {
   siteMetadata: {
     title: `Enlight Fellowship`,
-    description: `Enlight Fellowship Starter (Gatsby + Tailwind`,
+    description: `Enlight Fellowship Starter (Gatsby + Tailwind)`,
     author: `Enlight Team`,
   },
   plugins: [
